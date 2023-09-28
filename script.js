@@ -20,7 +20,6 @@ style.innerHTML = `
 `;
 iframeHead.appendChild(style);
 
-
 // to get the dom tree
 function logDOMTree(node, depth = 0, tree = []) {
     let indent = '';
@@ -36,8 +35,9 @@ function logDOMTree(node, depth = 0, tree = []) {
     }
     return tree;
 }
+
 // to show the dom tree
-function showElement(element){
+function showElement(element) {
     let div = document.createElement('div');
     let depth = (element.split(' ').length - 1) / 3;
     div.style.color = '#' + (depth * 1111111).toString(16);
@@ -53,30 +53,67 @@ function showElement(element){
     });
 }
 
+iframeBody.addEventListener('click', function (e) {
+    if (selectedEle) {
+        selectedEle.classList.remove('selected');
+    }
+    selectedEle = e.target;
+    selectedEle.classList.add('selected');
+    bindElementStyle(selectedEle)
+});
+
 function ShowTree(tree) {
-    domTree.innerHTML ="";
+    domTree.innerHTML = "";
     tree.forEach(element => showElement(element));
 
 }
 
 // to add element
-const addElementButton = document.getElementById('addElementButton')
+const add_div = document.getElementById('add-div');
+const add_p = document.getElementById('add-p');
+const add_span = document.getElementById('add-span');
+const add_button = document.getElementById('add-button');
+const add_input = document.getElementById('add-input');
+const add_a = document.getElementById('add-a');
+const add_img = document.getElementById('add-img');
+
 function addElement(tagName, parent) {
     let element = document.createElement(tagName);
     element.innerText = 'new element';
-    element.id = iframeBody.children.length + 1;
+    element.id = Math.floor(Math.random() * 999999)
     parent.appendChild(element);
-    
 }
-addElement('div',iframeBody);
-
-addElementButton.onclick = e => {
-addElement('div', iframeBody);
-// const last = iframeBody.children.last;
-ShowTree(logDOMTree(iframeBody));
 
 
+add_div.onclick = e => {
+    addElement('div', selectedEle || iframeBody);
+    ShowTree(logDOMTree(iframeBody));
 }
+add_p.onclick = e => {
+    addElement('p', selectedEle || iframeBody);
+    ShowTree(logDOMTree(iframeBody));
+}
+add_span.onclick = e => {
+    addElement('span', selectedEle || iframeBody);
+    ShowTree(logDOMTree(iframeBody));
+}
+add_button.onclick = e => {
+    addElement('button', selectedEle || iframeBody);
+    ShowTree(logDOMTree(iframeBody));
+}
+add_input.onclick = e => {
+    addElement('input', selectedEle || iframeBody);
+    ShowTree(logDOMTree(iframeBody));
+}
+add_a.onclick = e => {
+    addElement('a', selectedEle || iframeBody);
+    ShowTree(logDOMTree(iframeBody));
+}
+add_img.onclick = e => {
+    addElement('img', selectedEle || iframeBody);
+    ShowTree(logDOMTree(iframeBody));
+}
+
 
 
 // to remove element
@@ -94,33 +131,4 @@ function appandElement(element, parent) {
     parent.appendChild(element);
 }
 
-// must use after add elements to iframe
-
-
-
-// bind the selected element styles to the input use jquery
-function bindElementStyle(element) {
-
-    let style = element.style;
-    
-
-    // console.log(style.width);
-    // console.log();
-    // console.log(style.left);
-    // console.log(style.top);
-
-    // const W = document.getElementById('w');
-    // W.value=style.width;
-    // console.log(style.width);
-
-    // W.value=style.width.split('px')[0];
-    // style.width= W.value;
-    // console.log("W",W.value);
-
-    // $('#w').val(style.width.split('px')[0]);
-    // $('#h').val(style.height.split('px')[0]);
-    // $('#x').val(style.left.split('px')[0]);
-    // $('#y').val(style.top.split('px')[0]);
-}
-
-
+ShowTree(logDOMTree(iframeBody));
