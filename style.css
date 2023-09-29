@@ -3,6 +3,7 @@ body,
 html {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 /* custom scrollbar */
@@ -144,6 +145,14 @@ body {
     margin: 5px;
 }
 
+#flex>div>i:hover {
+    color: #e35959;
+}
+
+#flex #align>i {
+    transform: rotate(90deg);
+}
+
 /* Dimensions Panel styles */
 .dimensions-panel {
     background-color: #444;
@@ -167,6 +176,23 @@ body {
 .dimension-input input[type="number"] {
     width: 60px;
     padding: 5px;
+}
+
+.unit-control {
+    margin-right: 10px;
+    font-weight: bold;
+    width: fit-content;
+    padding: 5px;
+}
+
+/* input range #a */
+input[type="range"]#a {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    -webkit-appearance: none;
+    background-color: #f6f5f5;
+    border-radius: 100px
 }
 
 /* Color Panel styles */

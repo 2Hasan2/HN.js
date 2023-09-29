@@ -6,7 +6,6 @@ iframeBody.addEventListener('click', () => {
 function Draggable(ele) {
     addDraggableAttribute(ele);
     function addDraggableAttribute(ele) {
-        console.log(ele.tagName);
         if (!['HTML', 'BODY', 'HEAD', "SCRIPT"].includes(ele.tagName)) {
             ele.setAttribute('draggable', 'true');
         };
@@ -26,9 +25,10 @@ function Draggable(ele) {
 
     iframeBody.addEventListener("drop", (e) => {
         e.preventDefault();
-        console.log(e.target);
         if (e.target.tagName != "HTML") {
             e.target.appendChild(draggedElement);
+            ShowTree(logDOMTree(iframeBody));
+
         }
         draggedElement = null;
     });

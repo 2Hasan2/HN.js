@@ -45,6 +45,7 @@ div, p, span, button, input, a, img {
     }
 }
 `;
+
 iframeHead.appendChild(style);
 
 // to get the dom tree
@@ -54,7 +55,6 @@ function logDOMTree(node, depth = 0, tree = []) {
         indent = ' '.repeat(depth * 3) + '|-';
     }
     tree.push(`${indent}${node.tagName}#${node.id}`);
-    console.log();
     if (node.children.length > 0) {
         for (let i = 0; i < node.children.length; i++) {
             logDOMTree(node.children[i], depth + 1, tree);
@@ -76,7 +76,6 @@ function showElement(element) {
         }
         selectedEle = iframeDocument.getElementById(`${div.innerText.split('#')[1]}`);
         selectedEle.classList.add('selected');
-        bindElementStyle(selectedEle)
     });
 }
 iframeBody.addEventListener('click', function (e) {
@@ -85,9 +84,10 @@ iframeBody.addEventListener('click', function (e) {
     }
     selectedEle = e.target;
     selectedEle.classList.add('selected');
-    bindElementStyle(selectedEle)
+    bindElementStyle();
 
 });
+
 function ShowTree(tree) {
     domTree.innerHTML = "";
     tree.forEach(element => showElement(element));
@@ -102,6 +102,9 @@ const add_button = document.getElementById('add-button');
 const add_input = document.getElementById('add-input');
 const add_a = document.getElementById('add-a');
 const add_img = document.getElementById('add-img');
+const Export = document.getElementById('export');
+const remove = document.getElementById('remove');
+const edit = document.getElementById('edit');
 
 // add element function
 function addElement(tagName, parent) {
@@ -140,18 +143,28 @@ add_img.onclick = e => {
     addElement('img', selectedEle || iframeBody);
     ShowTree(logDOMTree(iframeBody));
 }
-
-
-
-// to remove element
-function removeElement(element) {
-    element.remove();
+Export.onclick = e => {
+    convert2img('png', selectedEle || iframeBody);
+}
+remove.onclick = e => {
+    if (selectedEle) {
+        if (selectedEle != iframeBody) {
+            selectedEle.remove();
+        }
+        ShowTree(logDOMTree(iframeBody));
+    }
+}
+edit.onclick = e => {
+    if (iframeBody != selectedEle && selectedEle != null) {
+        // make element editable
+        selectedEle.contentEditable = true;
+        selectedEle.focus();
+        selectedEle.addEventListener('blur', function () {
+            selectedEle.contentEditable = false;
+        })
+    }
 }
 
-// to edit element
-function editElement(element, text) {
-    element.innerText = text;
-}
 
 // to appand element to another element
 function appandElement(element, parent) {
@@ -173,64 +186,135 @@ function rgbToHex(rgb) {
     return hex;
 }
 // bind element style
-function bindElementStyle(element) {
-    const bgInput = document.getElementById('bg');
-    const fontColor = document.getElementById("fc");
+function bindElementStyle(element = selectedEle) {
+    if (!element) return;
+    const backgroundColor = document.getElementById('bg');
+    const color = document.getElementById("fc");
     const borderColor = document.getElementById("br")
-    const X = document.getElementById("x");
-    const Y = document.getElementById("y");
+    const left = document.getElementById("x");
+    const units_left = document.getElementById("units_x");
+    const top = document.getElementById("y");
+    const units_top = document.getElementById("units_y");
     const width = document.getElementById("w");
+    const units_width = document.getElementById("units_w");
     const height = document.getElementById("h");
-    const A = document.getElementById("a");
-    const radius = document.getElementById("r");
+    const units_height = document.getElementById("units_h");
+    const transform = document.getElementById("a");
+    const borderRadius = document.getElementById("r");
+    const units_borderRadius = document.getElementById("units_r");
+    const gap = document.getElementById("gap");
+    const units_gap = document.getElementById("units_gap");
 
     // id flex
     const flex = document.getElementById('flex');
-    console.log(getComputedStyle(element));
-
 
     // show sytle of element
-    width.value = parseInt(getComputedStyle(element).width);
-    height.value = parseInt(getComputedStyle(element).height);
-    // angle 
-    let a = getComputedStyle(element).transform;
-    // convert matrix to angle
-    a = Math.round(Math.asin(a.split(',')[1]) * (180 / Math.PI)) || 0;
-    A.value = a;
-    radius.value = parseInt(getComputedStyle(element).borderRadius.split('px')[0]);
-    bgInput.value = rgbToHex(getComputedStyle(element).backgroundColor);
-    fontColor.value = rgbToHex(getComputedStyle(element).color);
-    borderColor.value = rgbToHex(getComputedStyle(element).borderColor);
-    X.value = parseInt(getComputedStyle(element).left) || 0;
-    Y.value = parseInt(getComputedStyle(element).top) || 0;
+    function showStyle(element) {
+        ['width', 'height', 'borderRadius', 'backgroundColor', , 'transform', 'color', 'borderColor', 'left', 'top'].forEach((style) => {
+            if (style == 'transform') {
+                let a = getComputedStyle(element).transform;
+                // convert matrix to angle
+                transform.value = Math.round(Math.asin(a.split(',')[1]) * (180 / Math.PI)) || 0;
+            } if (style.includes('color') || style.includes('Color')) {
+                eval(`${style}.value = rgbToHex(getComputedStyle(element).${style});`);
+            } else {
+                try {
+                    eval(`${style}.value = parseInt(getComputedStyle(element).${style}) || 0;`);
+                    // set units selected
+                    console.log(getComputedStyle(element).height);
+                    eval(`units_${style}.value = getComputedStyle(element).${style}.split('px')[1] || 'px';`);
+                } catch (e) {
+                    console.log(e);
+                }
+            }
 
-    // change style of element
-    width.onchange = e => {
-        element.style.width = e.target.value + 'px';
+        });
+
+        //     width.value = parseInt(getComputedStyle(element).width);
+        // height.value = parseInt(getComputedStyle(element).height);
+        // // angle 
+        // let a = getComputedStyle(element).transform;
+        // // convert matrix to angle
+        // a = Math.round(Math.asin(a.split(',')[1]) * (180 / Math.PI)) || 0;
+        // A.value = a;
+        // borderRadius.value = parseInt(getComputedStyle(element).borderRadius.split('px')[0]);
+        // backgroundColor.value = rgbToHex(getComputedStyle(element).backgroundColor);
+        // color.value = rgbToHex(getComputedStyle(element).color);
+        // borderColor.value = rgbToHex(getComputedStyle(element).borderColor);
+        // left.value = parseInt(getComputedStyle(element).left) || 0;
+        // top.value = parseInt(getComputedStyle(element).top) || 0;
     }
-    height.onchange = e => {
-        element.style.height = e.target.value + 'px';
+    showStyle(element);
+
+
+    //INPUTS
+    function INPUT(type, input_value, input_unit) {
+        function Do(input_value, input_unit) {
+            let [value, unit] = [input_value.value, input_unit.value];
+            if (['px', '%', 'em', 'rem', 'vw', 'vh'].includes(unit)) {
+                input_value.style.display = 'block';
+                selectedEle.style[type] = value + unit;
+            } if (['auto', 'fit-content', '50%'].includes(unit)) {
+                input_value.style.display = 'none';
+                selectedEle.style[type] = unit;
+            }
+        }
+        input_unit.addEventListener("input", function () {
+            Do(input_value, input_unit);
+        });
+        input_value.addEventListener("input", function () {
+            Do(input_value, input_unit);
+        });
     }
-    A.onchange = e => {
+    INPUT('width', width, units_width);
+    INPUT('height', height, units_height);
+    INPUT('left', left, units_left);
+    INPUT('top', top, units_top);
+    INPUT('borderRadius', borderRadius, units_borderRadius);
+    INPUT('gap', gap, units_gap);
+
+    transform.onchange = e => {
         element.style.transform = `rotate(${e.target.value}deg)`;
     }
-    radius.onchange = e => {
-        element.style.borderRadius = e.target.value + 'px';
-    }
-    bgInput.onchange = e => {
+    backgroundColor.onchange = e => {
         element.style.backgroundColor = e.target.value;
     }
-    fontColor.onchange = e => {
+    color.onchange = e => {
         element.style.color = e.target.value;
     }
     borderColor.onchange = e => {
         element.style.borderColor = e.target.value;
     }
-    X.onchange = e => {
-        element.style.left = e.target.value + 'px';
-    }
-    Y.onchange = e => {
-        element.style.top = e.target.value + 'px';
-    }
 }
 
+// flex element
+let flex = document.getElementById('flex')
+let [a, b, c, d] = [...flex.children]
+
+let flex_icons = [...a.children, ...b.children, ...c.children, ...d.children]
+flex_icons.forEach((icon) => {
+    icon.addEventListener('click', () => {
+        if (selectedEle == null) return;
+        if (icon.getAttribute('data-flex').includes('column')) {
+            // rotate icon of justify-content and align-items
+            let [justify, align] = [[...document.getElementById('justify').children], [...document.getElementById('align').children]]
+            justify.forEach((icon) => {
+                icon.style.cssText = 'transform:rotate(90deg)'
+            })
+            align.forEach((icon) => {
+                icon.style.cssText = 'transform:rotate(0deg)'
+            })
+        } else if (icon.getAttribute('data-flex').includes('row')) {
+            // rotate icon of justify-content and align-items
+            let [justify, align] = [[...document.getElementById('justify').children], [...document.getElementById('align').children]]
+            justify.forEach((icon) => {
+                icon.style.cssText = 'transform:rotate(0deg)'
+            })
+            align.forEach((icon) => {
+                icon.style.cssText = 'transform:rotate(90deg)'
+            })
+        }
+        // change flex style
+        selectedEle.style.cssText += `${icon.getAttribute('data-flex')}`
+    })
+})

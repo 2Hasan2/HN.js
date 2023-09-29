@@ -6,6 +6,7 @@
     <title>Figma-Like Interface</title>
     <link rel="stylesheet" href="fontawesome-free-6.4.2-web/css/all.css">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -35,48 +36,95 @@
             <aside class="right-panel">
 
                 <div class="design-panel">
-                    <div id='flex' class="flex-panel">
-                        <div class="arrow-icons">
-                            <i class="fas fa-arrow-right"></i>
-                            <i class="fas fa-arrow-left"></i>
-                            <i class="fas fa-arrow-down"></i>
-                            <i class="fas fa-arrow-up"></i>
+                     <div id='flex' class="flex-panel">
+                        <div id="direction" class="arrow-icons">
+                            <i data-flex="flex-direction:row;" class="fas fa-arrow-right"></i>
+                            <i data-flex="flex-direction:row-reverse;" class="fas fa-arrow-left"></i>
+                            <i data-flex="flex-direction:column;" class="fas fa-arrow-down"></i>
+                            <i data-flex="flex-direction:column-reverse;" class="fas fa-arrow-up"></i>
                         </div>
-                        <div class="resize-icons">
-                            <i class="fas fa-arrows-alt-h"></i>
-                            <i class="fas fa-arrows-alt"></i>
+                        <div id="wrap" class="resize-icons">
+                            <i data-flex="flex-wrap: nowrap;" class="fas fa-arrows-alt-h"></i>
+                            <i data-flex="flex-wrap: wrap;" class="fas fa-arrows-alt"></i>
                         </div>
-                        <div class="alignment-icons">
-                            <i class="fas fa-align-center"></i>
-                            <i class="fas fa-align-right"></i>
-                            <i class="fas fa-align-left"></i>
+                        <div id="justify" class="alignment-icons">
+                            <i data-flex="justify-content: flex-start;" class="fas fa-align-left"></i>
+                            <i data-flex="justify-content: center;" class="fas fa-align-center"></i>
+                            <i data-flex="justify-content: flex-end;" class="fas fa-align-right"></i>
                         </div>
+                        <div id="align" class="alignment-icons">
+                            <i data-flex="align-items: flex-start;" class="fas fa-align-left"></i>
+                            <i data-flex="align-items: center;" class="fas fa-align-center"></i>
+                            <i data-flex="align-items: flex-end;" class="fas fa-align-right"></i>
+                        </div>
+                    </div>  
+                    <br>
+                    <div class="dimension-input">
+                        <label for="gap">gap:</label>
+                        <input type="number" id="gap">
+                        <select id="units_gap" class="unit-control">
+                            <option value="px">px</option>
+                            <option value="vh">vh</option>
+                            <option value="%">%</option>
+                        </select>
                     </div>
                 </div>
                 <div class="dimensions-panel">
                     <div class="dimension-input">
                         <label for="x">X:</label>
                         <input type="number" id="x">
+                        <select id="units_x" class="unit-control">
+                            <option value="px">px</option>
+                            <option value="vw">vw</option>
+                            <option value="%">%</option>
+                            <option value="0">zero</option>
+                        </select>
                     </div>
                     <div class="dimension-input">
                         <label for="y">Y:</label>
                         <input type="number" id="y">
+                        <select id="units_y" class="unit-control">
+                            <option value="px">px</option>
+                            <option value="vh">vh</option>
+                            <option value="%">%</option>
+                            <option value="0">zero</option>
+                        </select>
                     </div>
                     <div class="dimension-input">
                         <label for="w">W:</label>
                         <input type="number" id="w">
+                        <select id="units_w" class="unit-control">
+                            <option value="px">px</option>
+                            <option value="vw">vw</option>
+                            <option value="%">%</option>
+                            <option value="auto">auto</option>
+                            <option value="fit-content">fit</option>
+                        </select>
                     </div>
                     <div class="dimension-input">
                         <label for="h">H:</label>
                         <input type="number" id="h">
+                        <select id="units_h" class="unit-control">
+                            <option value="px">px</option>
+                            <option value="vh">vh</option>
+                            <option value="%">%</option>
+                            <option value="auto">auto</option>
+                            <option value="fit-content">fit</option>
+                        </select>
                     </div>
                     <div class="dimension-input">
                         <label for="a">A:</label>
-                        <input type="number" id="a">
+                        <input type="range" min="0" max="360" value="0" id="a">
                     </div>
                     <div class="dimension-input">
                         <label for="r">R:</label>
                         <input type="number" id="r">
+                         <select id="units_r" class="unit-control">
+                            <option value="px">px</option>
+                            <option value="vh">vh</option>
+                            <option value="%">%</option>
+                            <option value="50%">full</option>
+                        </select>
                     </div>
                 </div>
                 <div class="color-panel">
@@ -103,9 +151,12 @@
                     <button class="export-button" id="add-a">link</button>
                 </div>
                 <button id="export" class="export-button">Export</button>
+                <button id="remove" class="export-button">Remove</button>
+                <button id="edit" class="export-button">Edit</button>
             </aside>
         </main>
     </div>
+    <script src="js/export.js"></script>
     <script src="js/script.js"></script>
     <script src="js/drop.js"></script>
 </body>
