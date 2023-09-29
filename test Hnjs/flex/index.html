@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/fontawesome-free-6.4.2-web/css/all.css">
+    <style>
+        #flex{
+            width: 200px;
+    height: 200px;
+    background: #34bf42c7;
+    border-radius: 10%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+                }
+        #flex > div{
+                    display: flex;
+                    gap: 20px;
+        }
+        #flex>div>i{
+            display: flex;
+            text-align: center;
+            border-radius: 3px;
+            line-height: 24px;
+            width: 24px;
+            height: 24px;
+            background: #e35959;
+            justify-content: center;
+        }
+        #flex>div>i:hover{
+            background: #000;
+            color: #e35959;
+        }
+        #flex #align>i{
+            transform: rotate(90deg);
+        }
+        #test{
+            display: flex;
+            width:90vw;
+            height: 50vh;
+            gap:5vw;
+            background: #000;
+        }
+        #test>div{
+            width: 10%;
+            height: 10%;
+            background:aquamarine;
+        }
+
+    </style>
+</head>
+<body>
+    <div id='flex' class="flex-panel">
+        <div id="direction" class="arrow-icons">
+            <i data-flex="flex-direction:row;" class="fas fa-arrow-right"></i>
+            <i data-flex="flex-direction:row-reverse;" class="fas fa-arrow-left"></i>
+            <i data-flex="flex-direction:column;" class="fas fa-arrow-down"></i>
+            <i data-flex="flex-direction:column-reverse;" class="fas fa-arrow-up"></i>
+        </div>
+        <div id="wrap" class="resize-icons">
+            <i data-flex="flex-wrap: nowrap;" class="fas fa-arrows-alt-h"></i>
+            <i data-flex="flex-wrap: wrap;" class="fas fa-arrows-alt"></i>
+        </div>
+        <div id="justify" class="alignment-icons">
+            <i data-flex="justify-content: flex-start;" class="fas fa-align-left"></i>
+            <i data-flex="justify-content: center;" class="fas fa-align-center"></i>
+            <i data-flex="justify-content: flex-end;" class="fas fa-align-right"></i>
+        </div>
+        <div id="align" class="alignment-icons">
+            <i data-flex="align-items: flex-start;" class="fas fa-align-left"></i>
+            <i data-flex="align-items: center;" class="fas fa-align-center"></i>
+            <i data-flex="align-items: flex-end;" class="fas fa-align-right"></i>
+        </div>
+    </div>  
+    <div id="test">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <script>
+        let flex=document.getElementById('flex')
+        let test=document.getElementById('test')
+        let [a,b,c,d]=[...flex.children]
+
+        let flex_icons=[...a.children,...b.children,...c.children,...d.children]
+        flex_icons.forEach((icon)=>{
+            icon.addEventListener('click',()=>{
+                if(icon.getAttribute('data-flex').includes('column')){
+                    // rotate icon of justify-content and align-items
+                    let [justify,align]=[[...document.getElementById('justify').children],[...document.getElementById('align').children]]
+                    console.log(align);
+                    justify.forEach((icon)=>{
+                        icon.style.cssText='transform:rotate(90deg)'
+                    })
+                    align.forEach((icon)=>{
+                        icon.style.cssText='transform:rotate(0deg)'
+                    })
+                }else if(icon.getAttribute('data-flex').includes('row')){
+                    // rotate icon of justify-content and align-items
+                    let [justify,align]=[[...document.getElementById('justify').children],[...document.getElementById('align').children]]
+                    justify.forEach((icon)=>{
+                        icon.style.cssText='transform:rotate(0deg)'
+                    })
+                    align.forEach((icon)=>{
+                        icon.style.cssText='transform:rotate(90deg)'
+                    })
+                }
+
+                test.style.cssText+=`${icon.getAttribute('data-flex')}`  
+            })
+
+        })
+
+    </script>
+</body>
+</html>

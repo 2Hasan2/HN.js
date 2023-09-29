@@ -14,6 +14,19 @@ let selectedEle = null;
 // add class on the head use style tag
 let style = document.createElement('style');
 style.innerHTML = `
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    min-height: fit-content;
+    min-width: fit-content;
+    transition: all 0.3s;
+    cursor: move;
+}
+div, p, span, button, input, a, img {
+    display: flex;
+}
 .selected {
     outline: 2px solid #100;
     animation: blink 1s infinite;
@@ -66,7 +79,6 @@ function showElement(element) {
         bindElementStyle(selectedEle)
     });
 }
-
 iframeBody.addEventListener('click', function (e) {
     if (selectedEle) {
         selectedEle.classList.remove('selected');
@@ -76,14 +88,13 @@ iframeBody.addEventListener('click', function (e) {
     bindElementStyle(selectedEle)
 
 });
-
 function ShowTree(tree) {
     domTree.innerHTML = "";
     tree.forEach(element => showElement(element));
-
 }
 
-// to add element
+
+// btns to add element
 const add_div = document.getElementById('add-div');
 const add_p = document.getElementById('add-p');
 const add_span = document.getElementById('add-span');
@@ -92,6 +103,7 @@ const add_input = document.getElementById('add-input');
 const add_a = document.getElementById('add-a');
 const add_img = document.getElementById('add-img');
 
+// add element function
 function addElement(tagName, parent) {
     let element = document.createElement(tagName);
     element.innerText = 'new element';
@@ -160,7 +172,7 @@ function rgbToHex(rgb) {
     const hex = '#' + r.toString(16).padStart(2, '0') + g.toString(16).padStart(2, '0') + b.toString(16).padStart(2, '0');
     return hex;
 }
-
+// bind element style
 function bindElementStyle(element) {
     const bgInput = document.getElementById('bg');
     const fontColor = document.getElementById("fc");
@@ -171,6 +183,11 @@ function bindElementStyle(element) {
     const height = document.getElementById("h");
     const A = document.getElementById("a");
     const radius = document.getElementById("r");
+
+    // id flex
+    const flex = document.getElementById('flex');
+    console.log(getComputedStyle(element));
+
 
     // show sytle of element
     width.value = parseInt(getComputedStyle(element).width);
@@ -216,3 +233,4 @@ function bindElementStyle(element) {
         element.style.top = e.target.value + 'px';
     }
 }
+
