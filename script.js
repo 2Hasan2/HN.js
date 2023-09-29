@@ -60,6 +60,7 @@ iframeBody.addEventListener('click', function (e) {
     selectedEle = e.target;
     selectedEle.classList.add('selected');
     bindElementStyle(selectedEle)
+
 });
 
 function ShowTree(tree) {
@@ -132,3 +133,39 @@ function appandElement(element, parent) {
 }
 
 ShowTree(logDOMTree(iframeBody));
+
+  // Function to convert RGB to Hex
+  function rgbToHex(rgb) {
+    // Extract the individual color values
+    const values = rgb.match(/\d+/g);
+    const r = parseInt(values[0]);
+    const g = parseInt(values[1]);
+    const b = parseInt(values[2]);
+
+    // Convert to hex format
+    const hex = '#' + r.toString(16).padStart(2, '0') + g.toString(16).padStart(2, '0') + b.toString(16).padStart(2, '0');
+    return hex;
+  }
+  
+function bindElementStyle(element){
+    const bgInput = document.getElementById('bg');
+    const fontColor=document.getElementById("fc");
+    const borderColor =document.getElementById("br")
+    const X =document.getElementById("x");
+    const Y =document.getElementById("y");
+    const width =document.getElementById("w");
+    const height =document.getElementById("h");
+    const A =document.getElementById("a");
+    const radius =document.getElementById("r");
+    
+    width.value = parseInt(getComputedStyle(element).width);
+    width.value = parseInt(getComputedStyle(element).width);
+    width.value = parseInt(getComputedStyle(element).width);
+    height.value = parseInt(getComputedStyle(element).height);
+    A.value = parseInt(getComputedStyle(element).width);
+    radius.value = parseInt(getComputedStyle(element).width);
+    bgInput.value = rgbToHex(getComputedStyle(element).backgroundColor);
+    fontColor.value = rgbToHex(getComputedStyle(element).color);
+    borderColor.value = rgbToHex(getComputedStyle(element).borderColor);
+
+}
