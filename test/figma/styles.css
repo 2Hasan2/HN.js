@@ -1,0 +1,11 @@
+.resizable-rotateable {
+    width: 100px;
+    height: 100px;
+    background-color: lightblue;
+    position: absolute;
+    cursor: move;
+    border: 10px solid black;
+    box-sizing: border-box;
+    top: 100px;
+    left: 50px;
+}
