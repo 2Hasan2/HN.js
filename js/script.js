@@ -15,7 +15,21 @@ let selectedEle = null;
 let style = document.createElement('style');
 style.innerHTML = `
 .selected {
-    background-color: #007bff;
+    outline: 2px solid #100;
+    animation: blink 1s infinite;
+}
+@keyframes blink {
+    0% {
+        outline: 2px solid #100;
+    }
+
+    50% {
+        outline: 2px solid #fff;
+    }
+
+    100% {
+        outline: 2px solid #100;
+    }
 }
 `;
 iframeHead.appendChild(style);
@@ -134,8 +148,8 @@ function appandElement(element, parent) {
 
 ShowTree(logDOMTree(iframeBody));
 
-  // Function to convert RGB to Hex
-  function rgbToHex(rgb) {
+// Function to convert RGB to Hex
+function rgbToHex(rgb) {
     // Extract the individual color values
     const values = rgb.match(/\d+/g);
     const r = parseInt(values[0]);
@@ -145,27 +159,60 @@ ShowTree(logDOMTree(iframeBody));
     // Convert to hex format
     const hex = '#' + r.toString(16).padStart(2, '0') + g.toString(16).padStart(2, '0') + b.toString(16).padStart(2, '0');
     return hex;
-  }
-  
-function bindElementStyle(element){
+}
+
+function bindElementStyle(element) {
     const bgInput = document.getElementById('bg');
-    const fontColor=document.getElementById("fc");
-    const borderColor =document.getElementById("br")
-    const X =document.getElementById("x");
-    const Y =document.getElementById("y");
-    const width =document.getElementById("w");
-    const height =document.getElementById("h");
-    const A =document.getElementById("a");
-    const radius =document.getElementById("r");
-    
-    width.value = parseInt(getComputedStyle(element).width);
-    width.value = parseInt(getComputedStyle(element).width);
+    const fontColor = document.getElementById("fc");
+    const borderColor = document.getElementById("br")
+    const X = document.getElementById("x");
+    const Y = document.getElementById("y");
+    const width = document.getElementById("w");
+    const height = document.getElementById("h");
+    const A = document.getElementById("a");
+    const radius = document.getElementById("r");
+
+    // show sytle of element
     width.value = parseInt(getComputedStyle(element).width);
     height.value = parseInt(getComputedStyle(element).height);
-    A.value = parseInt(getComputedStyle(element).width);
-    radius.value = parseInt(getComputedStyle(element).width);
+    // angle 
+    let a = getComputedStyle(element).transform;
+    // convert matrix to angle
+    a = Math.round(Math.asin(a.split(',')[1]) * (180 / Math.PI)) || 0;
+    A.value = a;
+    radius.value = parseInt(getComputedStyle(element).borderRadius.split('px')[0]);
     bgInput.value = rgbToHex(getComputedStyle(element).backgroundColor);
     fontColor.value = rgbToHex(getComputedStyle(element).color);
     borderColor.value = rgbToHex(getComputedStyle(element).borderColor);
+    X.value = parseInt(getComputedStyle(element).left) || 0;
+    Y.value = parseInt(getComputedStyle(element).top) || 0;
 
+    // change style of element
+    width.onchange = e => {
+        element.style.width = e.target.value + 'px';
+    }
+    height.onchange = e => {
+        element.style.height = e.target.value + 'px';
+    }
+    A.onchange = e => {
+        element.style.transform = `rotate(${e.target.value}deg)`;
+    }
+    radius.onchange = e => {
+        element.style.borderRadius = e.target.value + 'px';
+    }
+    bgInput.onchange = e => {
+        element.style.backgroundColor = e.target.value;
+    }
+    fontColor.onchange = e => {
+        element.style.color = e.target.value;
+    }
+    borderColor.onchange = e => {
+        element.style.borderColor = e.target.value;
+    }
+    X.onchange = e => {
+        element.style.left = e.target.value + 'px';
+    }
+    Y.onchange = e => {
+        element.style.top = e.target.value + 'px';
+    }
 }

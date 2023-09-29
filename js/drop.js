@@ -1,31 +1,34 @@
-// usage
-// Draggable(the element you want to make draggable)
-// it will make all the children of the element draggable too
-document.addEventListener("DOMNodeInserted", () => {
-    Draggable(document.body);
+// Version: 1.0
+iframeBody.addEventListener('click', () => {
+    Draggable(iframeBody);
 });
 
 function Draggable(ele) {
     addDraggableAttribute(ele);
     function addDraggableAttribute(ele) {
-        ele.setAttribute('draggable', 'true');
+        console.log(ele.tagName);
+        if (!['HTML', 'BODY', 'HEAD', "SCRIPT"].includes(ele.tagName)) {
+            ele.setAttribute('draggable', 'true');
+        };
         for (const childElement of ele.children) {
             addDraggableAttribute(childElement);
         }
     }
+
     let draggedElement = null;
-    document.addEventListener("dragstart", (e) => {
+    iframeBody.addEventListener("dragstart", (e) => {
         draggedElement = e.target;
     });
-    document.addEventListener("dragover", (e) => {
+
+    iframeBody.addEventListener("dragover", (e) => {
         e.preventDefault();
     });
 
-    document.addEventListener("drop", (e) => {
+    iframeBody.addEventListener("drop", (e) => {
         e.preventDefault();
+        console.log(e.target);
         if (e.target.tagName != "HTML") {
             e.target.appendChild(draggedElement);
-            console.log();
         }
         draggedElement = null;
     });
