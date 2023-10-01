@@ -3,17 +3,38 @@ function makeResizableAndRotatable(element) {
     let isResizing = false;
     let isRotating = false;
     let startX, startY, startWidth, startHeight, startAngle;
+
+    document.addEventListener('mouseover', (e) => {
+        // log mouse position
+        if (isCloseToCorner(e, element)) {
+            element.style.cursor = '-webkit-grab';
+            // element.style.cursor = "url('rotation-cursor.png'), auto";
+        } else if (isCloseTo(e, element, 10)) {
+            element.style.cursor = 'ew-resize';
+        }
+        else {
+            element.style.cursor = 'auto'
+        }
+    });
+
+    document.addEventListener('mouseout', (e) => {
+        // log mouse position
+        if (isCloseToCorner(e, element, 20)) {
+            element.style.cursor = 'auto';
+        } else if (isCloseTo(e, element, 10)) {
+            element.style.cursor = 'auto';
+        }
+    });
+
+
     document.addEventListener('mousedown', (e) => {
         // log mouse position
-        console.log(isCloseToCorner(e, element, 20));
         if (isCloseToCorner(e, element, 20)) {
-            console.log('rotate');
             isRotating = true;
             startX = e.clientX;
             startY = e.clientY;
             startAngle = getRotationAngle(element);
         } else if (isCloseTo(e, element, 10)) {
-            console.log('resize');
             isResizing = true;
             startX = e.clientX;
             startY = e.clientY;
@@ -21,6 +42,7 @@ function makeResizableAndRotatable(element) {
             startHeight = element.offsetHeight;
         }
     });
+
 
     document.addEventListener('mousemove', (e) => {
         if (isResizing) {
@@ -37,28 +59,27 @@ function makeResizableAndRotatable(element) {
     document.addEventListener('mouseup', () => {
         isResizing = false;
         isRotating = false;
+
     });
-
-    // Helper function to calculate the angle between two points
-    function getAngle(x1, y1, x2, y2) {
-        const deltaX = x1 - x2;
-        const deltaY = y1 - y2;
-        const radians = Math.atan2(deltaY, deltaX);
-        return radians * (180 / Math.PI);
-    }
-
-    // Helper function to get the current rotation angle of an element
-    function getRotationAngle(element) {
-        const transform = window.getComputedStyle(element).getPropertyValue('transform');
-        const matrix = new DOMMatrix(transform);
-        return Math.atan2(matrix.b, matrix.a) * (180 / Math.PI);
-    }
 }
-
+// Helper function to calculate the angle between two points
 makeResizableAndRotatable(element);
 
-
 // helper functions
+
+function getAngle(x1, y1, x2, y2) {
+    const deltaX = x1 - x2;
+    const deltaY = y1 - y2;
+    const radians = Math.atan2(deltaY, deltaX);
+    return radians * (180 / Math.PI);
+}
+
+// Helper function to get the current rotation angle of an element
+function getRotationAngle(element) {
+    const transform = window.getComputedStyle(element).getPropertyValue('transform');
+    const matrix = new DOMMatrix(transform);
+    return Math.atan2(matrix.b, matrix.a) * (180 / Math.PI);
+}
 
 // check if mouse is close to any corner of an element
 function isCloseToCorner(e, element, R = element.offsetWidth / 6) {
