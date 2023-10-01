@@ -5,13 +5,15 @@ function makeResizableAndRotatable(element) {
     let startX, startY, startWidth, startHeight, startAngle;
     document.addEventListener('mousedown', (e) => {
         // log mouse position
+        console.log(isCloseToCorner(e, element, 20));
         if (isCloseToCorner(e, element, 20)) {
+            console.log('rotate');
             isRotating = true;
             startX = e.clientX;
             startY = e.clientY;
             startAngle = getRotationAngle(element);
         } else if (isCloseTo(e, element, 10)) {
-            console.log('resizing');
+            console.log('resize');
             isResizing = true;
             startX = e.clientX;
             startY = e.clientY;
@@ -53,7 +55,7 @@ function makeResizableAndRotatable(element) {
     }
 }
 
-// makeResizableAndRotatable(element);
+makeResizableAndRotatable(element);
 
 
 // helper functions
@@ -61,12 +63,35 @@ function makeResizableAndRotatable(element) {
 // check if mouse is close to any corner of an element
 function isCloseToCorner(e, element, R = element.offsetWidth / 6) {
     const { offsetLeft, offsetWidth, offsetTop, offsetHeight } = element;
+
+    // Get the computed style of the element to extract its rotation
+    const computedStyle = window.getComputedStyle(element);
+    const transform = computedStyle.getPropertyValue('transform');
+
+    // Parse the rotation from the transform property
+    const matrix = new DOMMatrixReadOnly(transform);
+    const rotation = Math.atan2(matrix.b, matrix.a); // Extract rotation in radians
+
+    // Calculate the element's center point
+    const centerX = offsetLeft + offsetWidth / 2;
+    const centerY = offsetTop + offsetHeight / 2;
+
+    // Calculate the mouse cursor position relative to the center
+    const relativeX = e.clientX - centerX;
+    const relativeY = e.clientY - centerY;
+
+    // Calculate the rotated mouse position using the rotation matrix
+    const rotatedX = relativeX * Math.cos(-rotation) - relativeY * Math.sin(-rotation);
+    const rotatedY = relativeX * Math.sin(-rotation) + relativeY * Math.cos(-rotation);
+
+    // Calculate distances to the rotated corners
     const distances = [
-        Math.sqrt((offsetLeft - e.clientX) ** 2 + (offsetTop - e.clientY) ** 2),
-        Math.sqrt((offsetLeft + offsetWidth - e.clientX) ** 2 + (offsetTop - e.clientY) ** 2),
-        Math.sqrt((offsetLeft - e.clientX) ** 2 + (offsetTop + offsetHeight - e.clientY) ** 2),
-        Math.sqrt((offsetLeft + offsetWidth - e.clientX) ** 2 + (offsetTop + offsetHeight - e.clientY) ** 2),
+        Math.sqrt((rotatedX - offsetWidth / 2) ** 2 + (rotatedY - offsetHeight / 2) ** 2),
+        Math.sqrt((rotatedX + offsetWidth / 2) ** 2 + (rotatedY - offsetHeight / 2) ** 2),
+        Math.sqrt((rotatedX - offsetWidth / 2) ** 2 + (rotatedY + offsetHeight / 2) ** 2),
+        Math.sqrt((rotatedX + offsetWidth / 2) ** 2 + (rotatedY + offsetHeight / 2) ** 2),
     ];
+
     const minDistance = Math.min(...distances);
 
     if (minDistance < R) {
@@ -74,6 +99,9 @@ function isCloseToCorner(e, element, R = element.offsetWidth / 6) {
     }
     return false;
 }
+
+
+
 // check if mouse is close to an element
 function isCloseTo(e, element, R = element.offsetWidth / 6) {
     const { offsetLeft, offsetWidth, offsetTop, offsetHeight } = element;
