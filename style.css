@@ -186,8 +186,7 @@ body {
 }
 
 /* input range #a */
-input[type="range"]#a {
-    width: 100%;
+input[type="range"] {
     margin: 0;
     padding: 0;
     -webkit-appearance: none;
