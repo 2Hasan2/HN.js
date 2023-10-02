@@ -75,6 +75,7 @@ function showElement(element) {
             selectedEle.classList.remove('selected');
         }
         selectedEle = iframeDocument.getElementById(`${div.innerText.split('#')[1]}`);
+        ResizeAndRotete(selectedEle)
         selectedEle.classList.add('selected');
     });
 }
@@ -83,6 +84,7 @@ iframeBody.addEventListener('click', function (e) {
         selectedEle.classList.remove('selected');
     }
     selectedEle = e.target;
+    ResizeAndRotete(selectedEle)
     selectedEle.classList.add('selected');
     bindElementStyle();
 

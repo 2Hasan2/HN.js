@@ -1,3 +1,11 @@
+.gr {
+    display: flex;
+    gap: 100px;
+    width: fit-content;
+    margin: 100px auto;
+
+}
+
 .resizable-rotateable {
     width: 100px;
     height: 100px;
