@@ -24,13 +24,13 @@
         <main class="workspace">
             <aside class="left-panel">
                 <div id="dom-show" class="panel-item">
-                    <pre id="dom-tree"></pre>
+                    <pre id="domTree"></pre>
                 </div>
                 <div id="files-tree" class="panel-item">Files Tree</div>
                 <div id="components" class="panel-item">Components</div>
             </aside>
             <div id="space" class="space">
-                <iframe id="frame" frameborder="0">
+                <iframe id="iframe" frameborder="0">
                 </iframe>
             </div>
             <aside class="right-panel">
@@ -72,8 +72,8 @@
                 <div class="dimensions-panel">
                     <div class="dimension-input">
                         <label for="x">X:</label>
-                        <input type="number" id="x">
-                        <select id="units_x" class="unit-control">
+                        <input type="number" id="left">
+                        <select id="units_left" class="unit-control">
                             <option value="px">px</option>
                             <option value="vw">vw</option>
                             <option value="%">%</option>
@@ -82,8 +82,8 @@
                     </div>
                     <div class="dimension-input">
                         <label for="y">Y:</label>
-                        <input type="number" id="y">
-                        <select id="units_y" class="unit-control">
+                        <input type="number" id="top">
+                        <select id="units_top" class="unit-control">
                             <option value="px">px</option>
                             <option value="vh">vh</option>
                             <option value="%">%</option>
@@ -92,8 +92,8 @@
                     </div>
                     <div class="dimension-input">
                         <label for="w">W:</label>
-                        <input type="number" id="w">
-                        <select id="units_w" class="unit-control">
+                        <input type="number" id="width">
+                        <select id="units_width" class="unit-control">
                             <option value="px">px</option>
                             <option value="vw">vw</option>
                             <option value="%">%</option>
@@ -103,8 +103,8 @@
                     </div>
                     <div class="dimension-input">
                         <label for="h">H:</label>
-                        <input type="number" id="h">
-                        <select id="units_h" class="unit-control">
+                        <input type="number" id="height">
+                        <select id="units_height" class="unit-control">
                             <option value="px">px</option>
                             <option value="vh">vh</option>
                             <option value="%">%</option>
@@ -114,12 +114,12 @@
                     </div>
                     <div class="dimension-input">
                         <label for="a">A:</label>
-                        <input type="range" min="0" max="360" value="0" id="a">
+                        <input type="range" min="0" max="360" value="0" id="transform">
                     </div>
                     <div class="dimension-input">
                         <label for="r">R:</label>
-                        <input type="number" id="r">
-                         <select id="units_r" class="unit-control">
+                        <input type="number" id="borderRadius">
+                         <select id="units_borderRadius" class="unit-control">
                             <option value="px">px</option>
                             <option value="vh">vh</option>
                             <option value="%">%</option>
@@ -130,15 +130,15 @@
                 <div class="color-panel">
                     <div class="color-input">
                         <label for="bg">BG:</label>
-                        <input name="bg" type="color" id="bg">
+                        <input name="bg" type="color" id="backgroundColor">
                     </div>
                     <div class="color-input">
                         <label for="fc">FC:</label>
-                        <input name="color" type="color" id="fc">
+                        <input name="color" type="color" id="color">
                     </div>
                     <div class="color-input">
                         <label for="br">BR:</label>
-                        <input type="color" id="br">
+                        <input type="color" id="borderColor">
                     </div>
                 </div>
                 <div style="background-color: rgb(13, 13, 13);">

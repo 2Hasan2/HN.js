@@ -1,15 +1,10 @@
-// dom-tree
-let domTree = document.getElementById('dom-tree');
-
 // iframe
-const iframe = document.getElementById('frame');
 const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
 const iframeBody = iframeDocument.body;
 const iframeHead = iframeDocument.head;
 
 // selected element
 let selectedEle = null;
-
 
 // add class on the head use style tag
 let style = document.createElement('style');
@@ -186,25 +181,7 @@ function rgbToHex(rgb) {
 // bind element style
 function bindElementStyle(element = selectedEle) {
     if (!element) return;
-    const backgroundColor = document.getElementById('bg');
-    const color = document.getElementById("fc");
-    const borderColor = document.getElementById("br")
-    const left = document.getElementById("x");
-    const units_left = document.getElementById("units_x");
-    const top = document.getElementById("y");
-    const units_top = document.getElementById("units_y");
-    const width = document.getElementById("w");
-    const units_width = document.getElementById("units_w");
-    const height = document.getElementById("h");
-    const units_height = document.getElementById("units_h");
-    const transform = document.getElementById("a");
-    const borderRadius = document.getElementById("r");
-    const units_borderRadius = document.getElementById("units_r");
-    const gap = document.getElementById("gap");
-    const units_gap = document.getElementById("units_gap");
 
-    // id flex
-    const flex = document.getElementById('flex');
 
     // show sytle of element
     function showStyle(element) {
@@ -220,7 +197,7 @@ function bindElementStyle(element = selectedEle) {
                     eval(`${style}.value = parseInt(getComputedStyle(element).${style}) || 0;`);
                     eval(`units_${style}.value = getComputedStyle(element).${style}.split('px')[1] || 'px';`);
                 } catch (e) {
-                    // console.log(e);
+                    console.log(`can't use ${style} on ${element.tagName}`);
                 }
             }
 
@@ -249,12 +226,10 @@ function bindElementStyle(element = selectedEle) {
             Do(input_value, input_unit);
         });
     }
-    INPUT('width', width, units_width);
-    INPUT('height', height, units_height);
-    INPUT('left', left, units_left);
-    INPUT('top', top, units_top);
-    INPUT('borderRadius', borderRadius, units_borderRadius);
-    INPUT('gap', gap, units_gap);
+
+    ['width', 'height', 'borderRadius', 'left', 'top', 'gap'].forEach((style) => {
+        INPUT(style, eval(style), eval(`units_${style}`));
+    });
 
     transform.onchange = e => {
         element.style.transform = `rotate(${e.target.value}deg)`;
@@ -271,7 +246,6 @@ function bindElementStyle(element = selectedEle) {
 }
 
 // flex element
-let flex = document.getElementById('flex')
 let [a, b, c, d] = [...flex.children]
 
 let flex_icons = [...a.children, ...b.children, ...c.children, ...d.children]
@@ -280,20 +254,20 @@ flex_icons.forEach((icon) => {
         if (selectedEle == null) return;
         if (icon.getAttribute('data-flex').includes('column')) {
             // rotate icon of justify-content and align-items
-            let [justify, align] = [[...document.getElementById('justify').children], [...document.getElementById('align').children]]
-            justify.forEach((icon) => {
+            let [Justify, Align] = [[...justify.children], [...align.children]]
+            Justify.forEach((icon) => {
                 icon.style.cssText = 'transform:rotate(90deg)'
             })
-            align.forEach((icon) => {
+            Align.forEach((icon) => {
                 icon.style.cssText = 'transform:rotate(0deg)'
             })
         } else if (icon.getAttribute('data-flex').includes('row')) {
             // rotate icon of justify-content and align-items
-            let [justify, align] = [[...document.getElementById('justify').children], [...document.getElementById('align').children]]
-            justify.forEach((icon) => {
+            let [Justify, Align] = [[...justify.children], [...align.children]]
+            Justify.forEach((icon) => {
                 icon.style.cssText = 'transform:rotate(0deg)'
             })
-            align.forEach((icon) => {
+            Align.forEach((icon) => {
                 icon.style.cssText = 'transform:rotate(90deg)'
             })
         }
