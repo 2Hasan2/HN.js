@@ -38,14 +38,14 @@ function ResizeAndRotete(element) {
         removeEventListener()
     }
 
-    document.addEventListener('mousedown', start);
-    document.addEventListener('mousemove', move);
-    document.addEventListener('mouseup', end)
+    iframeBody.addEventListener('mousedown', start);
+    iframeBody.addEventListener('mousemove', move);
+    iframeBody.addEventListener('mouseup', end)
 
     let removeEventListener = () => {
-        document.removeEventListener('mousedown', start);
-        document.removeEventListener('mousemove', move)
-        document.removeEventListener('mouseup', end)
+        iframeBody.removeEventListener('mousedown', start);
+        iframeBody.removeEventListener('mousemove', move)
+        iframeBody.removeEventListener('mouseup', end)
     }
 }
 

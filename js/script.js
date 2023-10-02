@@ -29,7 +29,7 @@ div, p, span, button, input, a, img {
 }
 .selected {
     outline: 2px solid #100;
-    animation: blink 1s infinite;
+    animation: blink 4s infinite;
 }
 @keyframes blink {
     0% {
@@ -75,18 +75,19 @@ function showElement(element) {
             selectedEle.classList.remove('selected');
         }
         selectedEle = iframeDocument.getElementById(`${div.innerText.split('#')[1]}`);
-        ResizeAndRotete(selectedEle)
         selectedEle.classList.add('selected');
+        bindElementStyle(selectedEle);
+        ResizeAndRotete(selectedEle, iframeBody)
     });
 }
-iframeBody.addEventListener('click', function (e) {
+iframeBody.addEventListener('dblclick', function (e) {
     if (selectedEle) {
         selectedEle.classList.remove('selected');
     }
     selectedEle = e.target;
-    ResizeAndRotete(selectedEle)
     selectedEle.classList.add('selected');
-    bindElementStyle();
+    bindElementStyle(selectedEle);
+    ResizeAndRotete(selectedEle, iframeBody)
 
 });
 
@@ -94,19 +95,6 @@ function ShowTree(tree) {
     domTree.innerHTML = "";
     tree.forEach(element => showElement(element));
 }
-
-
-// btns to add element
-const add_div = document.getElementById('add-div');
-const add_p = document.getElementById('add-p');
-const add_span = document.getElementById('add-span');
-const add_button = document.getElementById('add-button');
-const add_input = document.getElementById('add-input');
-const add_a = document.getElementById('add-a');
-const add_img = document.getElementById('add-img');
-const Export = document.getElementById('export');
-const remove = document.getElementById('remove');
-const edit = document.getElementById('edit');
 
 // add element function
 function addElement(tagName, parent) {
@@ -166,14 +154,22 @@ edit.onclick = e => {
         })
     }
 }
-
+copy.onclick = e => {
+    if (selectedEle) {
+        console.log(selectedEle);
+        let copy = selectedEle.cloneNode(true);
+        copy.id = Math.floor(Math.random() * 999999)
+        copy.classList.remove('selected');
+        selectedEle.parentElement.appendChild(copy);
+        ShowTree(logDOMTree(iframeBody));
+    }
+}
 
 // to appand element to another element
 function appandElement(element, parent) {
     parent.appendChild(element);
 }
 
-ShowTree(logDOMTree(iframeBody));
 
 // Function to convert RGB to Hex
 function rgbToHex(rgb) {
@@ -222,31 +218,16 @@ function bindElementStyle(element = selectedEle) {
             } else {
                 try {
                     eval(`${style}.value = parseInt(getComputedStyle(element).${style}) || 0;`);
-                    // set units selected
-                    console.log(getComputedStyle(element).height);
                     eval(`units_${style}.value = getComputedStyle(element).${style}.split('px')[1] || 'px';`);
                 } catch (e) {
-                    console.log(e);
+                    // console.log(e);
                 }
             }
 
         });
 
-        //     width.value = parseInt(getComputedStyle(element).width);
-        // height.value = parseInt(getComputedStyle(element).height);
-        // // angle 
-        // let a = getComputedStyle(element).transform;
-        // // convert matrix to angle
-        // a = Math.round(Math.asin(a.split(',')[1]) * (180 / Math.PI)) || 0;
-        // A.value = a;
-        // borderRadius.value = parseInt(getComputedStyle(element).borderRadius.split('px')[0]);
-        // backgroundColor.value = rgbToHex(getComputedStyle(element).backgroundColor);
-        // color.value = rgbToHex(getComputedStyle(element).color);
-        // borderColor.value = rgbToHex(getComputedStyle(element).borderColor);
-        // left.value = parseInt(getComputedStyle(element).left) || 0;
-        // top.value = parseInt(getComputedStyle(element).top) || 0;
     }
-    showStyle(element);
+    showStyle(element)
 
 
     //INPUTS
@@ -320,3 +301,8 @@ flex_icons.forEach((icon) => {
         selectedEle.style.cssText += `${icon.getAttribute('data-flex')}`
     })
 })
+
+
+window.onload = function () {
+    ShowTree(logDOMTree(iframeBody));
+}
