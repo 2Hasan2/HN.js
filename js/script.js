@@ -5,6 +5,7 @@ const iframeHead = iframeDocument.head;
 
 // selected element
 let selectedEle = null;
+let copiedEle =null;
 
 // add class on the head use style tag
 let style = document.createElement('style');
@@ -149,16 +150,60 @@ edit.onclick = e => {
         })
     }
 }
+// copy.onclick = e => {
+//     if (selectedEle) {
+//         console.log(selectedEle);
+//         let copy = selectedEle.cloneNode(true);
+//         copy.id = Math.floor(Math.random() * 999999)
+//         copy.classList.remove('selected');
+//         selectedEle.parentElement.appendChild(copy);
+//         ShowTree(logDOMTree(iframeBody));
+//     }
+// }
+
+
 copy.onclick = e => {
     if (selectedEle) {
-        console.log(selectedEle);
-        let copy = selectedEle.cloneNode(true);
-        copy.id = Math.floor(Math.random() * 999999)
-        copy.classList.remove('selected');
-        selectedEle.parentElement.appendChild(copy);
-        ShowTree(logDOMTree(iframeBody));
+        copiedEle = selectedEle.cloneNode(true);
     }
 }
+
+
+paste.onclick = e =>{
+    if (!copiedEle || !selectedEle) {
+        console.error('No element to paste or paste destination selected.');
+        return;
+    }
+    const newEle = copiedEle.cloneNode(true);
+      
+    newEle.id = Math.floor(Math.random() * 999999)
+
+    selectedEle.appendChild(newEle);
+    ShowTree(logDOMTree(iframeBody));
+}
+    
+makeACopy.onclick = e =>{
+
+// Create a temporary textarea element
+const textarea = document.createElement('textarea');
+textarea.value = selectedEle.outerHTML;
+
+// Append the textarea to the document
+document.body.appendChild(textarea);
+
+// Copy the element's HTML to the clipboard
+textarea.select();
+document.execCommand('copy');
+
+// Remove the temporary textarea
+document.body.removeChild(textarea);
+console.log("Copied");
+}
+
+
+
+
+
 
 // to appand element to another element
 function appandElement(element, parent) {
