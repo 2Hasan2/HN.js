@@ -1,49 +1,75 @@
-let selectedElement = null;
-let isRotating = false;
-let initialAngle = 0;
-let currentAngle = 0;
+const selected = document.getElementById('selected');
+const controllers = document.querySelectorAll('.radius-controller');
 
-function calculateAngle(x1, y1, x2, y2) {
-    const deltaX = x2 - x1;
-    const deltaY = y2 - y1;
-    return Math.atan2(deltaY, deltaX) * (180 / Math.PI);
-}
+let isDragging = false;
+let startX;
+let startY;
+let initialRadius;
 
-function startRotation(e) {
-    selectedElement = e.currentTarget.parentElement; // Get the parent element (the selected element)
-    isRotating = true;
-    const centerX = selectedElement.offsetWidth / 2;
-    const centerY = selectedElement.offsetHeight / 2;
-    const mouseX = e.clientX - selectedElement.getBoundingClientRect().left;
-    const mouseY = e.clientY - selectedElement.getBoundingClientRect().top;
-    initialAngle = calculateAngle(centerX, centerY, mouseX, mouseY) - currentAngle;
+function updateBorderRadius(event) {
+    const currentX = event.clientX;
+    const currentY = event.clientY;
 
-    // Add mousemove and mouseup event listeners to the document
-    document.addEventListener('mousemove', rotate);
-    document.addEventListener('mouseup', stopRotation);
-}
+    const deltaX = currentX - startX;
+    const deltaY = currentY - startY;
 
-function rotate(e) {
-    if (isRotating && selectedElement) {
-        const centerX = selectedElement.offsetWidth / 2;
-        const centerY = selectedElement.offsetHeight / 2;
-        const mouseX = e.clientX - selectedElement.getBoundingClientRect().left;
-        const mouseY = e.clientY - selectedElement.getBoundingClientRect().top;
-        const newAngle = calculateAngle(centerX, centerY, mouseX, mouseY) - initialAngle;
-        selectedElement.style.transform = `rotate(${newAngle}deg)`;
-        currentAngle = newAngle;
+    const W = selected.offsetWidth;
+    const H = selected.offsetHeight;
+
+
+
+    // make the controllers move on line to the element center depending on the direction of the mouse move
+    controllers.forEach((controller, i) => {
+        let X = selected.offsetWidth - controller.offsetWidth;
+        let Y = selected.offsetHeight - controller.offsetHeight;
+
+        if (deltaY < 0 && Math.abs(deltaY) < H) {
+
+            if (i === 0 || i === 1) {
+                controller.style.top = `${Y + deltaY}px`;
+            } else {
+                controller.style.top = `${- deltaY}px`;
+            }
+
+        }
+        if (deltaX < 0 && Math.abs(deltaX) < W) {
+            if (i === 0 || i === 2) {
+                controller.style.left = `${X + deltaX}px`;
+            } else {
+                controller.style.left = `${- deltaX}px`;
+            }
+        }
+
+
+    });
+
+    if (deltaX < 0 && deltaY < 0 && Math.abs(deltaX) < W && Math.abs(deltaY) < H) {
+        const newRadius = Math.max(initialRadius - deltaX, 0);
+        selected.style.borderRadius = `${newRadius}px`;
     }
 }
 
-function stopRotation() {
-    isRotating = false;
-
-    // Remove mousemove and mouseup event listeners from the document
-    document.removeEventListener('mousemove', rotate);
-    document.removeEventListener('mouseup', stopRotation);
+function onMouseUp() {
+    if (isDragging) {
+        isDragging = false;
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+    }
 }
 
-// Add a "mousedown" event listener to the "rotate" divs
-document.querySelectorAll('.rotate').forEach((rotateHandle) => {
-    rotateHandle.addEventListener('mousedown', startRotation);
+function onMouseMove(e) {
+    if (!isDragging) return;
+    updateBorderRadius(e);
+}
+
+controllers.forEach(controller => {
+    controller.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+
+        initialRadius = parseFloat(getComputedStyle(selected).borderRadius);
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+    });
 });

@@ -5,44 +5,8 @@ const iframeHead = iframeDocument.head;
 
 // selected element
 let selectedEle = null;
-let copiedEle = null;
 
-// add class on the head use style tag
-let style = document.createElement('style');
-style.innerHTML = `
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    position: relative;
-    min-height: fit-content;
-    min-width: fit-content;
-    transition: all 0.3s;
-    cursor: move;
-}
-div, p, span, button, input, a, img {
-    display: flex;
-}
-.selected {
-    outline: 2px solid #100;
-    animation: blink 4s infinite;
-}
-@keyframes blink {
-    0% {
-        outline: 2px solid #100;
-    }
-
-    50% {
-        outline: 2px solid #fff;
-    }
-
-    100% {
-        outline: 2px solid #100;
-    }
-}
-`;
-
-iframeHead.appendChild(style);
+setstyle(iframeHead);
 
 // to get the dom tree
 function logDOMTree(node, depth = 0, tree = []) {
@@ -72,19 +36,22 @@ function showElement(element) {
         }
         selectedEle = iframeDocument.getElementById(`${div.innerText.split('#')[1]}`);
         selectedEle.classList.add('selected');
+        settools(iframeBody, selectedEle)
         bindElementStyle(selectedEle);
-        ResizeAndRotete(selectedEle, iframeBody)
+        resizeControl(iframeBody, selectedEle);
+
     });
 }
 iframeBody.addEventListener('dblclick', function (e) {
+    console.log(selectedEle);
     if (selectedEle) {
         selectedEle.classList.remove('selected');
     }
     selectedEle = e.target;
     selectedEle.classList.add('selected');
+    settools(iframeDocument, selectedEle)
     bindElementStyle(selectedEle);
-    ResizeAndRotete(selectedEle, iframeBody)
-
+    resizeControl(iframeBody, selectedEle);
 });
 
 function ShowTree(tree) {
