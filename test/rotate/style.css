@@ -1,0 +1,22 @@
+.selected {
+    width: 100px;
+    height: 100px;
+    margin: 50px auto;
+    position: relative;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center;
+}
+
+.rotate {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    top: 110%;
+    background-color: blue;
+    cursor: pointer;
+    z-index: 1;
+}
