@@ -1,3 +1,18 @@
+let seletedEle = null;
+document.addEventListener('click', (e) => {
+    if (e.altKey && !['BODY', 'HTM'].includes(e.target.tagName)) {
+        e.preventDefault();
+        e.stopPropagation();
+        seletedEle = e.target;
+        ResizeAndRotete(seletedEle);
+        console.log(seletedEle);
+    }
+});
+
+
+
+
+
 // to give the user the ability to resize and rotate the element like in Figma
 function ResizeAndRotete(element) {
     let isResizing = false;
@@ -38,14 +53,14 @@ function ResizeAndRotete(element) {
         removeEventListener()
     }
 
-    document.addEventListener('mousedown', start);
-    document.addEventListener('mousemove', move);
-    document.addEventListener('mouseup', end)
+    document.body.addEventListener('mousedown', start);
+    document.body.addEventListener('mousemove', move);
+    document.body.addEventListener('mouseup', end)
 
     let removeEventListener = () => {
-        document.removeEventListener('mousedown', start);
-        document.removeEventListener('mousemove', move)
-        document.removeEventListener('mouseup', end)
+        document.body.removeEventListener('mousedown', start);
+        document.body.removeEventListener('mousemove', move)
+        document.body.removeEventListener('mouseup', end)
     }
 }
 
