@@ -1,0 +1,22 @@
+@mixin custom-scrollbar($thumb-color, $track-color, $thumb-width, $thumb-radius) {
+  &::-webkit-scrollbar {
+    width: $thumb-width;
+    height: $thumb-width;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    border-radius: $thumb-radius;
+    transition: background-color 0.2s, border-radius 0.2s; // Add a transition for smooth changes
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); // Add a subtle box-shadow for depth
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: lighten($thumb-color, 10%); // Lighten the thumb color on hover
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+    border-radius: $thumb-radius; // Match the thumb's border-radius for a smooth track
+  }
+}

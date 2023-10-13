@@ -1,0 +1,10 @@
+@mixin panel($width, $height, $column-start, $row-start) {
+    grid-column: #{$column-start} / span #{$width};
+    grid-row: #{$row-start} / span #{$height};
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #ccc;
+}

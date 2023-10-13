@@ -4,8 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="fontawesome-free-6.4.2-web/css/all.css">
 </head>
 <body>
-    
+    <div id="app">
+        <div id="top-panel">
+           <div class="group" id="group_1" >
+            <!-- 4 screen icons  -->
+            <div id="screen_1" class="screen-icon">
+                <img src="imgs/file-manager-layout.svg" alt="SVG">
+            </div>
+            <div id="screen_3" class="screen-icon">
+                <img src="imgs/left-column-layout.svg" alt="SVG">
+            </div>
+            <div id="screen_4" class="screen-icon">
+                <img src="imgs/right-column-layout.svg" alt="SVG">
+            </div>
+           </div> 
+           <div class="group" id="group_2" >
+            <!-- 6 tools icons -->
+            <div id="tool_1" class="tool-icon">
+                <i class="fa-solid fa-angles-left"></i>
+            </div>
+            <div id="tool_2" class="tool-icon">
+                <i class="fa-solid fa-angles-left reverse"></i>
+            </div>
+            <div id="tool_3" class="tool-icon">
+                <i class="fa-solid fa-hand-back-fist"></i>
+            </div>
+            <div id="tool_4" class="tool-icon">
+                <i class="fa-solid fa-eye"></i>
+            </div>
+            <div id="tool_5" class="tool-icon">
+                <i class="fa-solid fa-maximize"></i>
+            </div>
+            <div id="tool_6" class="tool-icon">
+                <i class="fas fa-download"></i>
+            </div>
+           </div> 
+           <div class="group" id="group_3" >
+            <!-- 5 setting icons -->
+            <div id="setting_1" class="setting-icon">
+                <i class="fa-solid fa-tablet"></i>
+            </div>
+            <div id="setting_2" class="setting-icon">
+                <i class="fa-solid fa-laptop"></i>
+            </div>
+            <div id="setting_3" class="setting-icon">
+                <i class="fa-solid fa-mobile"></i>
+            </div>
+            </div>
+            <div class="group" id="group_4">
+            <div id="setting_4" class="setting-icon">
+                <i class="fa-solid fa-moon"></i>
+            </div>
+            <div id="setting_5">
+                <i class="fa-solid fa-sun"></i>
+            </div>
+            <div id="setting_6" class="setting-icon">
+                <i class="fa-solid fa-floppy-disk"></i>
+            </div>
+            <div id="setting_7" class="setting-icon">
+                <i class="fa-solid fa-pager"></i>
+            </div>
+           </div> 
+        </div>
+        <div id="left-panel"></div>
+        <div id="canvas">
+            <div id="iframe-wrapper">
+                <div id="iframe-layer"></div>
+                <iframe src="local_content.html" id="iframe"></iframe>
+            </div>
+        </div>
+        <div id="right-panel"></div>
+        <div id="bottom-panel"></div>
+    </div>
 </body>
 </html>
