@@ -131,13 +131,31 @@ img {
   overflow: hidden;
 }
 #app #canvas #iframe-wrapper #iframe-layer {
+  position: relative;
   overflow: hidden;
   pointer-events: none;
   white-space: nowrap;
+  z-index: 10;
+}
+#app #canvas #iframe-wrapper #iframe-layer > * {
+  position: absolute;
+}
+#app #canvas #iframe-wrapper #iframe-layer #highlight {
+  width: 100px;
+  height: 100px;
+  background: rgba(45, 199, 204, 0.3);
+  top: 10px;
+  left: 10px;
+  border: 1px solid #2dc7cc;
+  transition: all 0.3s ease-in-out;
+  z-index: 1000;
 }
 #app #canvas #iframe-wrapper #iframe {
   resize: both;
   width: 100%;
   height: 100%;
   border: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }/*# sourceMappingURL=app.css.map */
