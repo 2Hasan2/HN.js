@@ -2,6 +2,7 @@
 @import './scss/var';
 @import './scss/mixins/scroll_bar';
 @import './scss/mixins/panel';
+@import './scss/tools/tools-box';
 
 #app {
     /* 20 cell full w and h */
@@ -91,10 +92,10 @@
 
             #iframe-layer {
                 position: relative;
-                overflow: hidden;
                 pointer-events: none;
                 white-space: nowrap;
-                z-index: 10;
+                width: 100%;
+                height: 100%;
 
                 &>* {
                     position: absolute;
@@ -108,7 +109,6 @@
                     left: 10px;
                     border: 1px solid #2dc7cc;
                     transition: all 0.3s ease-in-out;
-                    z-index: 1000;
                 }
             }
 
@@ -117,7 +117,6 @@
                 width: 100%;
                 height: 100%;
                 border: none;
-                // disable text selection
                 user-select: none;
             }
         }

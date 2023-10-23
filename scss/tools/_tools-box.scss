@@ -1,0 +1,29 @@
+// tools-box includes all 7 btns and their styles
+#tools-box {
+    display: flex;
+    width: 250px;
+    height: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border-radius: 0.5rem;
+    background: #ccc;
+    flex-direction: row-reverse;
+    overflow: hidden;
+
+    z-index: 100;
+
+    &>div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        border: 1px solid #fff;
+        transition: all 0.3s ease-in-out;
+
+        &>i:hover {
+            color: #fff;
+        }
+
+    }
+}
