@@ -18,7 +18,7 @@ function App() {
         >
           Learn React
         </a>
-        <div className="text-center text-4xl text-red-500">
+        <div className="text-center grid text-4xl text-red-500">
           Hello World
         </div>
       </header>
