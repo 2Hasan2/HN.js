@@ -10,8 +10,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <>
-    <App />
-    {/* text use tailwind style */}
+      <App />
+      {/* text use tailwind style */}
 
     </>
   </React.StrictMode>

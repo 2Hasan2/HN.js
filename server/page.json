@@ -1,0 +1,22 @@
+[
+	{
+		"type": "div",
+		"id": "root",
+		"children": [
+			{
+				"type": "div",
+				"text": "Hello World",
+				"id": "header",
+				"className": "flex justify-center items-center"
+			},
+			{
+				"type": "button",
+				"id": "btn-1",
+				"text": " click me",
+				"onClick": "() => { console.log('clicked');}",
+				"className": "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md shadow-md"
+			}
+		],
+		"className": "flex bg-red-100 font-sans text-gray-900"
+	}
+]
