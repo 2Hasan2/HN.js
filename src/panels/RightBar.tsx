@@ -1,20 +1,9 @@
-import React from "react";
-
-import {
-	ChevronDownIcon,
-	EyeIcon,
-	DeviceDesktopIcon,
-	UsersIcon,
-	AlignBottomIcon,
-	AlignCenterIcon,
-	AlignLeftIcon,
-	AlignRightIcon,
-	AlignTopIcon,
-	AlignMiddleIcon,
-} from "../components/Icon";
-
+import { Icons } from "../components/Icon";
 
 import Accordion from "../components/Accordion";
+
+const { ChevronDownIcon, DeviceDesktopIcon, AlignBottomIcon, AlignCenterIcon, AlignLeftIcon, AlignRightIcon, AlignTopIcon, AlignMiddleIcon, EyeIcon, UsersIcon } = Icons;
+
 
 
 const RightBar = () => {

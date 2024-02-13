@@ -1,18 +1,21 @@
-import React from "react";
-import {
-	AlertCircleIcon,
-	LayoutIcon,
-	Palette,
-	FileIcon,
-	ImageIcon,
-	SettingsIcon,
-	SquarePlusIcon,
-	LogoIcon,
-} from "../components/Icon";
+import { Icons } from "../components/Icon";
 
 import user from "../data/user";
 
 import Tooltip from "../components/Tooltip";
+
+const {
+	SquarePlusIcon,
+	LayoutIcon,
+	FileIcon,
+	ImageIcon,
+	AlertCircleIcon,
+	PaletteIcon,
+	SettingsIcon,
+	LogoIcon,
+} = Icons;
+
+
 
 const LeftBar = () => {
 	return (
@@ -44,7 +47,7 @@ const LeftBar = () => {
 						href="#j"
 						className="group relative rounded-xl p-2 text-gray-400 hover:bg-gray-100"
 					>
-						<Palette className="h-6 w-6 stroke-current" />
+						<PaletteIcon className="h-6 w-6 stroke-current" />
 						<Tooltip>
 							Themes <span className="text-gray-400">(T)</span>
 						</Tooltip>

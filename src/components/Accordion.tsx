@@ -1,4 +1,7 @@
-import {ChevronDownIcon } from "./Icon";
+import { Icons } from "./Icon";
+
+const { ChevronDownIcon } = Icons;
+
 interface AccordionProps {
   children?: React.ReactNode;
   title?: string;

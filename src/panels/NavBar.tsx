@@ -1,10 +1,7 @@
 import react from 'react';
-import {
-	ChevronLeftIcon,
-	ChevronDownIcon,
-	EyeIcon,
-	PackageIcon,
-} from "../components/Icon";
+import {Icons} from "../components/Icon";
+
+const { ChevronLeftIcon, ChevronDownIcon, EyeIcon, PackageIcon } = Icons;
 
 const NavBar = () => {
 	  return (

@@ -1,51 +1,56 @@
+// icons.ts
+import { ReactComponent as ChevronDownIcon } from "../icons/chevron-down.svg";
+import { ReactComponent as ChevronLeftIcon } from "../icons/chevron-left.svg";
+import { ReactComponent as EyeIcon } from "../icons/eye.svg";
+import { ReactComponent as DeviceDesktopIcon } from "../icons/device-desktop.svg";
+import { ReactComponent as DeviceTabletIcon } from "../icons/device-tablet.svg";
+import { ReactComponent as DeviceMobileIcon } from "../icons/device-mobile.svg";
+import { ReactComponent as DeviceMobileRotatedIcon } from "../icons/device-mobile-rotated.svg";
+import { ReactComponent as PackageIcon } from "../icons/package.svg";
+import { ReactComponent as UsersIcon } from "../icons/users.svg";
+import { ReactComponent as SquarePlusIcon } from "../icons/square-plus.svg";
+import { ReactComponent as LayoutIcon } from "../icons/layout.svg";
+import { ReactComponent as PaletteIcon } from "../icons/palette.svg";
+import { ReactComponent as FileIcon } from "../icons/file.svg";
+import { ReactComponent as ImageIcon } from "../icons/image.svg";
+import { ReactComponent as AlertCircleIcon } from "../icons/alert-circle.svg";
+import { ReactComponent as SettingsIcon } from "../icons/settings.svg";
+import { ReactComponent as AlignBottomIcon } from "../icons/align-bottom.svg";
+import { ReactComponent as AlignCenterIcon } from "../icons/align-center.svg";
+import { ReactComponent as AlignLeftIcon } from "../icons/align-left.svg";
+import { ReactComponent as AlignRightIcon } from "../icons/align-right.svg";
+import { ReactComponent as AlignTopIcon } from "../icons/align-top.svg";
+import { ReactComponent as AlignMiddleIcon } from "../icons/align-middle.svg";
+import { ReactComponent as BarsIcon } from "../icons/bars.svg";
+import { ReactComponent as PencilIcon } from "../icons/pencil.svg";
+import { ReactComponent as LogoIcon } from "../icons/logo.svg";
 
-export { default as ChevronDownIcon } from "../icons/chevron-down.svg";
-export { default as ChevronLeftIcon } from "../icons/chevron-left.svg";
-export { default as EyeIcon } from "../icons/eye.svg";
-export { default as DeviceDesktopIcon } from "../icons/device-desktop.svg";
-export { default as DeviceTabletIcon } from "../icons/device-tablet.svg";
-export { default as DeviceMobileIcon } from "../icons/device-mobile.svg";
-export { default as DeviceMobileRotatedIcon } from "../icons/device-mobile-rotated.svg";
-export { default as PackageIcon } from "../icons/package.svg";
-export { default as UsersIcon } from "../icons/users.svg";
-export { default as SquarePlusIcon } from "../icons/square-plus.svg";
-export { default as LayoutIcon } from "../icons/layout.svg";
-export { default as PaletteIcon } from "../icons/palette.svg";
-export { default as FileIcon } from "../icons/file.svg";
-export { default as ImageIcon } from "../icons/image.svg";
-export { default as AlertCircleIcon } from "../icons/alert-circle.svg";
-export { default as SettingsIcon } from "../icons/settings.svg";
-export { default as AlignBottomIcon } from "../icons/align-bottom.svg";
-export { default as AlignCenterIcon } from "../icons/align-center.svg";
-export { default as AlignLeftIcon } from "../icons/align-left.svg";
-export { default as AlignRightIcon } from "../icons/align-right.svg";
-export { default as AlignTopIcon } from "../icons/align-top.svg";
-export { default as AlignMiddleIcon } from "../icons/align-middle.svg";
-export { default as BarsIcon } from "../icons/bars.svg";
-export { default as PencilIcon } from "../icons/pencil.svg";
-export { default as LogoIcon } from "../icons/logo.svg";
-export { default as FileIconSvg } from "../icons/file.svg";
-export { default as ImageIconSvg } from "../icons/image.svg";
-export { default as AlertCircleIconSvg } from "../icons/alert-circle.svg";
-export { default as SettingsIconSvg } from "../icons/settings.svg";
-export { default as AlignBottomIconSvg } from "../icons/align-bottom.svg";
-export { default as AlignCenterIconSvg } from "../icons/align-center.svg";
-export { default as AlignLeftIconSvg } from "../icons/align-left.svg";
-export { default as AlignRightIconSvg } from "../icons/align-right.svg";
-export { default as AlignTopIconSvg } from "../icons/align-top.svg";
-export { default as AlignMiddleIconSvg } from "../icons/align-middle.svg";
-export { default as BarsIconSvg } from "../icons/bars.svg";
-export { default as PencilIconSvg } from "../icons/pencil.svg";
-export { default as LogoIconSvg } from "../icons/logo.svg";
-export { default as ChevronLeftIconSvg } from "../icons/chevron-left.svg";
-export { default as ChevronDownIconSvg } from "../icons/chevron-down.svg";
-export { default as EyeIconSvg } from "../icons/eye.svg";
-export { default as DeviceDesktopIconSvg } from "../icons/device-desktop.svg";
-export { default as DeviceTabletIconSvg } from "../icons/device-tablet.svg";
-export { default as DeviceMobileIconSvg } from "../icons/device-mobile.svg";
-export { default as DeviceMobileRotatedIconSvg } from "../icons/device-mobile-rotated.svg";
-export { default as PackageIconSvg } from "../icons/package.svg";
-export { default as UsersIconSvg } from "../icons/users.svg";
-export { default as SquarePlusIconSvg } from "../icons/square-plus.svg";
-export { default as LayoutIconSvg } from "../icons/layout.svg";
-export { default as PaletteIconSvg } from "../icons/palette.svg";
+type IconType = React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+
+export const Icons: { [key: string]: IconType } = {
+	ChevronDownIcon,
+	ChevronLeftIcon,
+	EyeIcon,
+	DeviceDesktopIcon,
+	DeviceTabletIcon,
+	DeviceMobileIcon,
+	DeviceMobileRotatedIcon,
+	PackageIcon,
+	UsersIcon,
+	SquarePlusIcon,
+	LayoutIcon,
+	PaletteIcon,
+	FileIcon,
+	ImageIcon,
+	AlertCircleIcon,
+	SettingsIcon,
+	AlignBottomIcon,
+	AlignCenterIcon,
+	AlignLeftIcon,
+	AlignRightIcon,
+	AlignTopIcon,
+	AlignMiddleIcon,
+	BarsIcon,
+	PencilIcon,
+	LogoIcon,
+};

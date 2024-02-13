@@ -1,6 +1,8 @@
 import React from "react";
 
-import { PencilIcon } from "./Icon";
+import { Icons } from "./Icon";
+
+const { PencilIcon } = Icons;
 
 const EleSelector = () => {
 	return (
